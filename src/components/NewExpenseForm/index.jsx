@@ -4,30 +4,42 @@ import {v4 as uuidv4} from 'uuid'
 function NewExpenseForm({db, setDb}) {
 
   const [newExpense, setNewExpense] = useState({
-        id: '',
-        date: Date.now(),
-        description: "",
+        description: '',
         totalValue: '',
-        installment: true,
-        numberOfInstallments: '',
-        installmentValue: 100
+        hasInstallment: false,
+        numberOfInstallments: 1,
   })
+
+  const clearFields = () => {
+    setNewExpense({
+        description: '',
+        totalValue: '',
+        hasInstallment: false,
+        numberOfInstallments: 1,
+    })
+  }
 
   const handleChangeEvent = e => {
     const {name, value} = e.target
     setNewExpense((prevState) => ({
       ...prevState,
       id: uuidv4(),
-      [name]: value
+      date: Date.now(),
+      [name]: (name == "hasInstallment") ? !prevState.hasInstallment : value, //If the field changed is 'hasInstallment', we invert the value.
     }))
   }
-
+  
   const handleClick = e => {
     e.preventDefault()
     setDb([
       ...db,
-      newExpense
+      {
+        ...newExpense,
+        installmentValue: (newExpense.totalValue && newExpense.numberOfInstallments != 1) ? (newExpense.totalValue / newExpense.numberOfInstallments) : null
+      }
     ])
+
+    clearFields()
   }
 
   return (
@@ -42,12 +54,15 @@ function NewExpenseForm({db, setDb}) {
         </div>
         <div>
           <label>Installments</label>
-          <input type='button'/>
+          <input type='checkbox' name="hasInstallment" checked={newExpense.hasInstallment} onChange={handleChangeEvent}/>
         </div>
+        {newExpense.hasInstallment ? 
         <div>
           <label>Number of Installments</label>
           <input type='number' name="numberOfInstallments" value={newExpense.numberOfInstallments} onChange={handleChangeEvent}/>
         </div>
+        : <></>
+      }
         <button onClick={handleClick}>Create expense</button>
       </form>
   )
