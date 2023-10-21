@@ -1,0 +1,15 @@
+ul{
+    background-color: #eee;
+    margin: 3rem;
+    padding: 2rem;
+    box-shadow: 0.1rem 0.1rem 10px #000;
+    border-radius: 0.75rem;
+}
+
+li{
+    list-style: none;
+    background-color: #27ae8333;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 0.75rem;
+}

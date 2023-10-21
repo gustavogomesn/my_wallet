@@ -3,6 +3,7 @@ import './App.css'
 import expenses from './assets/database/db.js'
 import ListOfExpenses from './components/ListOfExpenses'
 import NewExpenseForm from './components/NewExpenseForm'
+import Header from './components/Header'
 
 function App() {
 
@@ -10,11 +11,9 @@ function App() {
 
   return (
     <>
-      <h1>This is my wallet</h1>
+      <Header />
 
       <NewExpenseForm db={db} setDb={setDb}/>
-
-      <hr></hr>
 
       <ListOfExpenses db={db}/>
 
