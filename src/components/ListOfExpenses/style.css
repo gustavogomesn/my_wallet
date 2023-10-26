@@ -1,15 +1,48 @@
-ul{
+.no-expenses-message{
+    text-align: center;
+    color: #eee;
+    font-size: 1rem;
+}
+
+ul {
     background-color: #eee;
     margin: 3rem;
     padding: 2rem;
     box-shadow: 0.1rem 0.1rem 10px #000;
     border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-li{
+li {
     list-style: none;
     background-color: #27ae8333;
-    margin: 1rem;
-    padding: 2rem;
+    padding: 0 1rem;
+    height: 4rem;
     border-radius: 0.75rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-expense-button{
+    display: block;
+    height: 1.75rem;
+    width: 2rem;
+    margin-left: auto;
+    margin-right: 1rem;
+    border: 0.1rem solid #dc3546;
+    border-radius: 0.25rem;
+    color: #dc3546a4;
+    transition: 120ms background-color ease-in;
+    font-weight: bold;
+    letter-spacing: 1px;
+    
+}
+
+.delete-expense-button:hover{
+background-color: #dc3545;
+color: #eee;
 }

@@ -15,7 +15,7 @@ function App() {
 
       <NewExpenseForm db={db} setDb={setDb}/>
 
-      <ListOfExpenses db={db}/>
+      <ListOfExpenses db={db} setDb={setDb}/>
 
     </>
   )

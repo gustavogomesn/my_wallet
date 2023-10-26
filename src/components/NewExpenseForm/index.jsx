@@ -63,7 +63,7 @@ function NewExpenseForm({ db, setDb }) {
                     </label>
                     : <></>
                 }
-                <button onClick={handleClick}>Create</button>
+                <button className='create-expense-button' onClick={handleClick}>Create</button>
             </div>
             <div className='new-expense-box'>informations</div>
         </form>
