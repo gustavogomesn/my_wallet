@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import './style.css'
@@ -44,6 +44,34 @@ function NewExpenseForm({ db, setDb }) {
         clearFields()
     }
 
+    const [valueOfExpenses, setValueOfExpenses] = useState({
+        totalAmount: 0,
+        totalAmountOfInstallments: 0
+    })
+
+    useEffect(() => {
+        totalValueOfExpenses()
+    }, [db])
+
+    const totalValueOfExpenses = () => {
+        const sumWithInitial = db.reduce(function (accumulator = {}, exp = {}) {
+
+            
+            if (exp.installmentValue) {
+                accumulator.subtotal += parseFloat(exp.installmentValue)
+            }
+
+            accumulator.total += parseFloat(exp.totalValue)
+            
+            return accumulator
+
+        }, {
+            subtotal: 0,
+            total: 0
+        })
+        setValueOfExpenses(sumWithInitial)
+    }
+
     return (
         <form>
             <div className='new-expense-box'>
@@ -65,7 +93,14 @@ function NewExpenseForm({ db, setDb }) {
                 }
                 <button className='create-expense-button' onClick={handleClick}>Create</button>
             </div>
-            <div className='new-expense-box'>informations</div>
+            <div className='new-expense-box'>
+                <p>
+                    Total value: {valueOfExpenses.total}
+                </p>
+                <p>
+                    Installmentes: {valueOfExpenses.subtotal}
+                </p>
+            </div>
         </form>
     )
 }

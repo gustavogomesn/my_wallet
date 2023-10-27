@@ -27,6 +27,12 @@ li {
     justify-content: center;
 }
 
+.date-of-expense{
+    opacity: 0.4;
+    font-size: 0.75rem;
+    position: absolute;
+}
+
 .delete-expense-button{
     display: block;
     height: 1.75rem;

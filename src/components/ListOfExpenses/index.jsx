@@ -26,15 +26,20 @@ function ListOfExpenses({ db, setDb }) {
         return <p className='no-expenses-message'>You don't have any expenses yet. Try add one!</p>
     }else{
         return (
-    
-    
+            
+            
+            
             <ul>
                 {
-                db.map(expense => {
+                    db.map(expense => {
+                    var newDate = new Date(expense.date)
                     return <li key={expense.id} id={expense.id}>
-                        <span>
-                            {expense.description}, {brl.format(expense.totalValue)} {expense.hasInstallment ? "- Valor da parcela:  " + brl.format(expense.installmentValue) : ""}
-                        </span>
+                        <div>
+                            <span>
+                                {expense.description}, {brl.format(expense.totalValue)} {expense.hasInstallment ? "- Valor da parcela:  " + brl.format(expense.installmentValue) : ""}
+                            </span>
+                            <p className='date-of-expense'>{newDate.toLocaleDateString()}</p>
+                        </div>
                         <button className='delete-expense-button' onClick={handleDeleteTaskClick}>X</button>
                     </li>
                 })}
