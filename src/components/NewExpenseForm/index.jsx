@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import {addMonths} from 'date-fns'
 
 import './style.css'
 
@@ -25,21 +26,30 @@ function NewExpenseForm({ db, setDb }) {
         const { name, value } = e.target
         setNewExpense((prevState) => ({
             ...prevState,
-            id: uuidv4(),
-            date: Date.now(),
             [name]: (name == "hasInstallment") ? !prevState.hasInstallment : value, //If the field changed is 'hasInstallment', we invert the value.
         }))
     }
 
     const handleClick = e => {
         e.preventDefault()
-        setDb([
-            ...db,
-            {
+
+        const currentDate = new Date()
+
+        const auxDb = [...db]
+        for (let i = 0; i < newExpense.numberOfInstallments; i++) {
+
+            // const plusCurrentDate = new Date(currentDate.setMonth(currentDate.getMonth() + i))
+            const plusCurrentDate = addMonths(currentDate,  i)
+
+            auxDb.push({
                 ...newExpense,
+                id: uuidv4(),
+                date: plusCurrentDate,
                 installmentValue: (newExpense.totalValue && newExpense.numberOfInstallments != 1) ? (newExpense.totalValue / newExpense.numberOfInstallments) : null
-            }
-        ])
+            })
+
+        }
+        setDb(auxDb)
 
         clearFields()
     }
@@ -56,13 +66,13 @@ function NewExpenseForm({ db, setDb }) {
     const totalValueOfExpenses = () => {
         const sumWithInitial = db.reduce(function (accumulator = {}, exp = {}) {
 
-            
+
             if (exp.installmentValue) {
                 accumulator.subtotal += parseFloat(exp.installmentValue)
             }
 
             accumulator.total += parseFloat(exp.totalValue)
-            
+
             return accumulator
 
         }, {
